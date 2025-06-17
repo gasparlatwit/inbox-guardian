@@ -1,14 +1,19 @@
-<!-- UI for extension -->
 <!DOCTYPE html>
 <html>
-<head><title>InboxGuardian</title></head>
+<head>
+  <title>InboxGuardian</title>
+</head>
 <body>
-  <h3>PhishDetect</h3>
+  <h3>Inbox Guardian</h3>
   <p><strong>Sender:</strong> <span id="sender">Loading...</span></p>
-  <button id="scan">Scan Email</button>
-  <script src="popup.js">
-    //put code for scan script here//
 
-  </script>
+  <p><strong>Links:</strong></p>
+  <ul id="links"></ul>
+
+  <p><strong>Attachments:</strong></p>
+  <ul id="attachments"></ul>
+
+  <button id="scan">Scan Email</button>
+  <script src="popup.js"></script>
 </body>
 </html>
