@@ -1,9 +1,23 @@
 <!DOCTYPE html>
 <html>
-<head><title>InboxGuardian</title></head>
+<head>
+  <title>InboxGuardian</title>
+</head>
 <body>
-  <h3>PhishDetect</h3>
+  <h3>Inbox Guardian</h3>
+  <p><strong>Sender:</strong> <span id="sender">Loading...</span></p>
+
+  <script src="tf.min.js"></script>
+  <script src="popup.js" defer></script>
+
+  <p><strong>Links:</strong></p>
+  <ul id="links"></ul>
+
+  <p><strong>Attachments:</strong></p>
+  <ul id="attachments"></ul>
+
+  <p id="scanResult">Result will appear here.</p>
+
   <button id="scan">Scan Email</button>
-  <script src="popup.js"></script>
 </body>
 </html>
