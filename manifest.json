@@ -11,6 +11,13 @@
   "background": {
     "service_worker": "background.js"
   },
+  
+  "web_accessible_resources": [
+    {
+        "resources": ["model.json", "group1-shard1of1.bin", "word_index.json"],
+        "matches": ["<all_urls>"]
+    }
+  ],
   "content_scripts": [
     {
       "matches": ["https://mail.google.com/*"],
@@ -18,3 +25,4 @@
     }
   ]
 }
+
