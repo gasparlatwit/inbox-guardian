@@ -1,23 +1,13 @@
+// debug
+// const DEBUG = true;
 
-let model;
-let wordIndex;
+// function debugLog(message, data = null) {
+//   if (DEBUG) {
+//     console.log(`[POPUP] ${message}`, data);
+//   }
+// }
 
-async function loadModelAndIndex() {
-    model = await tf.loadLayersModel(chrome.runtime.getURL('model.json'));
-    const response = await fetch(chrome.runtime.getURL('word_index.json'));
-    wordIndex = await response.json();
-}
-
-loadModelAndIndex();
-
-function preprocessText(text) {
-    const cleaned = text.toLowerCase().replace(/[^a-z0-9\s]/g, '');
-    const words = cleaned.split(/\s+/);
-    const seq = words.map(word => wordIndex[word] || 1);
-    const maxLen = 80;
-    return seq.length > maxLen ? seq.slice(0, maxLen) : Array(maxLen - seq.length).fill(0).concat(seq);
-}
-
+// listen for scan click from popup.html
 document.getElementById('scan').addEventListener('click', () => {
     document.getElementById('sender').textContent = "Scanning...";
     document.getElementById('links').innerHTML = "";
@@ -29,7 +19,7 @@ document.getElementById('scan').addEventListener('click', () => {
         document.body.appendChild(p);
         return p;
     })();
-    resultEl.textContent = "Running analysis...";
+    resultEl.textContent = "Extracting email content...";
 
     chrome.tabs.query({ active: true, currentWindow: true }, ([tab]) => {
         chrome.tabs.sendMessage(tab.id, { command: "scrapeEmail" }, (response) => {
@@ -39,6 +29,8 @@ document.getElementById('scan').addEventListener('click', () => {
                 return;
             }
 
+            // display info from contentScript scraping
+            // TODO make prettier
             document.getElementById('sender').textContent = response.sender || "Sender not found";
 
             if (Array.isArray(response.links)) {
@@ -57,19 +49,31 @@ document.getElementById('scan').addEventListener('click', () => {
                 });
             }
 
-            if (model && wordIndex && response.body) {
-                const inputSeq = preprocessText(response.body);
-                const inputTensor = tf.tensor2d([inputSeq], [1, 80]);
-                const prediction = model.predict(inputTensor);
-
-                prediction.data().then(data => {
-                    const score = data[0];
-                    resultEl.textContent = score > 0.5
-                        ? `⚠️ Potential Phishing (Confidence: ${(score * 100).toFixed(2)}%)`
-                        : `✅ Likely Safe (Confidence: ${((1 - score) * 100).toFixed(2)}%)`;
+            // send body to background.js for prediction
+            if (response.body) {
+                resultEl.textContent = "Analyzing email for phishing...";
+                
+                chrome.runtime.sendMessage({
+                    // send analze email email signal to background.js
+                    action: 'ANALYZE_EMAIL',
+                    emailData: {
+                        body: response.body,
+                        sender: response.sender,
+                        links: response.links,
+                        images: response.images
+                    }
+                }, (analysisResponse) => {
+                    if (analysisResponse.success) {
+                        resultEl.textContent = analysisResponse.isPhishing
+                        // rating done in backround.js. be sure to re-bundle
+                            ? `Phishing Risk! (Confidence: ${analysisResponse.confidence}%)`
+                            : `Likely Safe (Confidence: ${analysisResponse.confidence}%)`;
+                    } else {
+                        resultEl.textContent = `Analysis failed: ${analysisResponse.error}`;
+                    }
                 });
             } else {
-                resultEl.textContent = "Model not ready or no email body.";
+                resultEl.textContent = "No email body found to analyze.";
             }
         });
     });

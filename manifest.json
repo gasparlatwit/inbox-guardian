@@ -1,28 +1,31 @@
 {
   "manifest_version": 3,
   "name": "Inbox Guardian",
-  "version": "0.1",
-  "description": "Detects phishing attempts in open emails",
-  "permissions": ["scripting", "activeTab"],
+  "version": "0.5",
+  "description": "Analyzes open emails and predicts if they are malicous all locally in your browser.",
+  "permissions": ["scripting", "activeTab", "activeTab", "contextMenus"],
   "host_permissions": ["https://mail.google.com/*"],
   "action": {
-    "default_popup": "popup.html"
+    "default_popup": "public/popup.html"
   },
   "background": {
-    "service_worker": "background.js"
+    "service_worker": "dist/background.js"
   },
   
   "web_accessible_resources": [
     {
-        "resources": ["model.json", "group1-shard1of1.bin", "word_index.json"],
+        "resources": ["model/model.json", "model/group1-shard1of1.bin", "model/word_index.json"],
         "matches": ["<all_urls>"]
     }
   ],
   "content_scripts": [
     {
       "matches": ["https://mail.google.com/*"],
-      "js": ["contentScript.js"]
+      "js": ["src/contentScript.js"]
     }
-  ]
+  ],
+   "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'"
+  }
 }
 

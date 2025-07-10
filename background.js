@@ -1,1 +1,0 @@
-//acts as service worker. 

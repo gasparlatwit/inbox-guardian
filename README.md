@@ -22,9 +22,9 @@
 
 - [x] ~~Gen AI or Machine Learning~~  
 - Machine Learning  
-- [ ] What machine Learning model  
-- [ ] Dataset  
-- [ ] Chrome Extension  
+- [x] What machine Learning model  
+- [x] Dataset
+- [x] Chrome Extension  
 - [ ] Firefox Compatibility
 
 ### Diagrams
@@ -38,16 +38,17 @@
 
 - [x] ~~Repo Created~~  
 - [x] ~~Extension Framework~~  
-- [ ] DOM Scraping Functional  
-- [ ] Model Trained  
-- [ ] Model implementation
+- [x] DOM Scraping Functional  
+- [x] Model Trained  
+- [x] Model implementation
 
 #### Required Deliverable
 
-- [ ] Unpacked Extension Functional
+- [x] Unpacked Extension Functional
 
 #### Extended Milestones
 
+- [ ] Improve model accuracy
 - [ ] More informative UI  
 - [ ] Text evaluation summary  
 - [ ] Functional on different mail sites  

@@ -1,24 +1,34 @@
+// debug
+const DEBUG = true;
+
+function debugLog(message, data = null) {
+  if (DEBUG) {
+    console.log(`[CONTENT] ${message}`, data);
+  }
+  
+}
+
+// TODO make sure email can be scraped in all views
+//listen for scrape request from popup.js
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   if (request.command === "scrapeEmail") {
     try {
       let sender = "Not found";
-      
-      // Look for sender in the currently opened email conversation
-      // Try different selectors for the opened email view
+      // use different methods for different views
       let senderElement = 
-        // For opened email in conversation view
+        // full opened email
         document.querySelector('.nH.if .ha span[email]') ||
         document.querySelector('.nH.if .gD[email]') ||
-        // For single email view
+        // single email
         document.querySelector('.ii.gt .ha span[email]') ||
         document.querySelector('.ii.gt .gD[email]') ||
-        // More specific selectors for email header area
+        // email header info
         document.querySelector('.adn.ads .go span[email]') ||
         document.querySelector('.adn.ads .gD[email]') ||
-        // Alternative approach - look within the email container
+        // TODO check email container (test removing)
         document.querySelector('div[data-message-id] .ha span[email]') ||
         document.querySelector('div[data-message-id] .gD[email]') ||
-        // Fallback to original selectors but within email body area
+        // email body checking
         document.querySelector('.nH .ha span[email]') ||
         document.querySelector('.nH .gD[email]');
 
@@ -26,7 +36,7 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
         sender = senderElement.getAttribute('email') || "Not found";
       }
 
-      // Also look for the email body in the opened email
+      // email body in open email
       const bodyElement = document.querySelector('div.a3s.aiL') || 
                          document.querySelector('div.a3s') ||
                          document.querySelector('.ii.gt div[dir="ltr"]');
@@ -38,7 +48,7 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
 
       const imageElements = bodyElement ? bodyElement.querySelectorAll('img') : [];
       const images = Array.from(imageElements).map(img => img.src);
-
+      // send all scraped parts back to popup.js
       sendResponse({ sender, body: bodyText, links, images });
     } catch (err) {
       console.error('Error scraping email:', err);
