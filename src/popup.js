@@ -1,11 +1,11 @@
-// debug
-// const DEBUG = true;
+//debug
+const DEBUG = true;
 
-// function debugLog(message, data = null) {
-//   if (DEBUG) {
-//     console.log(`[POPUP] ${message}`, data);
-//   }
-// }
+function debugLog(message, data = null) {
+  if (DEBUG) {
+    console.log(`[POPUP] ${message}`, data);
+  }
+}
 
 // listen for scan click from popup.html
 document.getElementById('scan').addEventListener('click', () => {
@@ -24,7 +24,7 @@ document.getElementById('scan').addEventListener('click', () => {
     chrome.tabs.query({ active: true, currentWindow: true }, ([tab]) => {
         chrome.tabs.sendMessage(tab.id, { command: "scrapeEmail" }, (response) => {
             if (!response) {
-                document.getElementById('sender').textContent = "No response from content script.";
+                document.getElementById('sender').textContent = "No response from content script. Try Refreshing the page."; // check why it doesnt always respond
                 resultEl.textContent = "Scan failed.";
                 return;
             }
@@ -64,10 +64,8 @@ document.getElementById('scan').addEventListener('click', () => {
                     }
                 }, (analysisResponse) => {
                     if (analysisResponse.success) {
-                        resultEl.textContent = analysisResponse.isPhishing
                         // rating done in backround.js. be sure to re-bundle
-                            ? `Phishing Risk! (Confidence: ${analysisResponse.confidence}%)`
-                            : `Likely Safe (Confidence: ${analysisResponse.confidence}%)`;
+                        resultEl.textContent = `${analysisResponse.score}`;
                     } else {
                         resultEl.textContent = `Analysis failed: ${analysisResponse.error}`;
                     }

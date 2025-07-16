@@ -92,9 +92,7 @@ async function analyzeEmail(emailData, sendResponse) {
     // change classification here!
     sendResponse({
       success: true,
-      score: score,
-      isPhishing: score > 0.5,
-      confidence: score > 0.5 ? (score * 100).toFixed(2) : ((1 - score) * 100).toFixed(2),
+      score: (score * 100).toFixed(),
       emailData: emailData
     });
     

@@ -2,6 +2,21 @@
 <html>
 <head>
   <title>InboxGuardian</title>
+  <style>
+    details summary {
+      cursor: pointer;
+      font-weight: bold;
+      color: #007BFF;
+    }
+
+    details[open] summary {
+      color: #0056b3;
+    }
+
+    ul {
+      margin-left: 20px;
+    }
+  </style>
 </head>
 <body>
   <h3>Inbox Guardian</h3>
@@ -9,11 +24,15 @@
 
   <script src="../src/popup.js" defer></script>
 
-  <p><strong>Links:</strong></p>
-  <ul id="links"></ul>
+  <details>
+    <summary>Links</summary>
+    <ul id="links"></ul>
+  </details>
 
-  <p><strong>Attachments:</strong></p>
-  <ul id="attachments"></ul>
+  <details>
+    <summary>Attachments</summary>
+    <ul id="attachments"></ul>
+  </details>
 
   <p id="scanResult">Result will appear here.</p>
 
