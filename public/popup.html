@@ -3,39 +3,228 @@
 <head>
   <title>InboxGuardian</title>
   <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 10px;
+      background-color: #f9f9f9;
+      width: 400px;
+      height: 300px;
+      box-sizing: border-box;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start; 
+      border: 2px solid #e0e0e0;
+      position: relative;
+      overflow: hidden;
+    }
+
+    body, p, li, summary, h3 {
+      font-size: 16px;
+      color: #000;
+    }
+
+    h3 {
+      text-align: right;
+      font-size: 18px;
+      font-weight: 700;
+      color: #c71610;
+      margin-bottom: 0px;
+      margin-top: 0px;
+      padding-bottom: 0px;
+
+    }
+
     details summary {
       cursor: pointer;
       font-weight: bold;
-      color: #007BFF;
+      color: #3e65cf;
     }
 
     details[open] summary {
-      color: #0056b3;
+      color: #3b60c4;
     }
 
     ul {
       margin-left: 20px;
     }
+
+    .top-bar {
+      padding: 0 0px;
+    }
+
+    .sender-info {
+      border-bottom: 2px solid #464646;
+      padding-bottom: 0px;
+      margin-top: 0px;
+      padding-left: 0px;
+      padding-right: 0px;
+      padding-top: 0px;
+    }
+
+    #sender {
+      display: inline-block;
+      max-width: 280px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      vertical-align: bottom;
+    }
+
+    .content-scroll {
+      position: absolute;
+      top: 95px; 
+      bottom: 80px;
+      left: 10px;
+      right: 10px;
+      overflow-y: auto;
+    }
+
+    .dropdown-section {
+      font-size: 12px;
+      line-height: 1.2;
+      list-style-type: disc;
+      margin-bottom: 8px;
+      padding-bottom: 6px;
+      border-bottom: 1px solid #ccc;
+      padding-left: 16px;
+
+    }
+
+    .dropdown-section ul {
+      max-height: 120px;
+      overflow-y: auto;
+      padding-left: 16px;
+      margin: 4px 0;
+      font-size: 8px;
+      line-height: 1.2;
+      list-style-type: disc;
+      border-bottom: 1px solid #ccc;
+
+    }
+
+    .dropdown-section ul a {
+      color: #000;
+      text-decoration: none;
+      cursor: text;
+    }
+
+    .dropdown-section ul a:hover {
+      text-decoration: underline;
+    }
+
+    .dropdown-section li {
+      margin-bottom: 4px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      border-bottom: 1px solid #ccc;
+
+    }
+
+    .bottom-section {
+      position: absolute;
+      bottom: 0px;
+      left: 0px;
+      right: 0px;
+      margin-top: 20px;
+      padding-top: 10px;
+    }
+
+    #scanResult {
+      font-weight: bold;
+      font-size: 32px;
+      text-align: right;
+      margin-left: 10px;
+    }
+
+    .scan-container {
+      flex-grow: 1;
+      background-color: #e0e0e0;
+      border-radius: 0px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px;
+      font-size: 16px;
+    }
+    
+    #scan {
+      padding: 10px 20px;
+      font-size: 18px;
+      background-color: #28a745;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+    .scan-output {
+      flex-direction: row;
+      justify-content: flex-end;
+      align-items: baseline;
+      gap: 6px;
+      text-align: right;
+    }
+
+    #scanLabel {
+      font-weight: bold;
+      text-align: right;
+      margin-right: 0px;
+      font-size: 18px;
+    }
+
+    #scan:hover {
+      background-color: #218838;
+    }
+
+    .low {
+    color: #08851b;
+    }
+
+    .medium {
+    color: #f2a60c;
+    }
+
+    .high {
+    color: #c71610;
+    }
+
   </style>
 </head>
 <body>
+  <div class="top-bar">
   <h3>Inbox Guardian</h3>
-  <p><strong>Sender:</strong> <span id="sender">Loading...</span></p>
+    <div class="sender-info">
+      <p><strong>Sender:</strong> <span id="sender">Waiting for Scan</span></p>
+    </div>
+</div>
+
+  <div class="content-scroll">
+    <div class="dropdown-section">
+      <details>
+        <summary>Links</summary>
+        <ul id="links"></ul>
+      </details>
+    </div>
+
+    <div class="dropdown-section">
+      <details>
+        <summary>Attachments</summary>
+        <ul id="attachments"></ul>
+      </details>
+    </div>
+  </div>
+
+  <div class="bottom-section">
+    <div class="scan-container">
+      <button id="scan">Scan Email</button>
+      <div class="scan-output">
+        <span id="scanLabel"></span>
+        <span id="scanResult">00</span>
+      </div>
+    </div>
+  </div>
 
   <script src="../src/popup.js" defer></script>
-
-  <details>
-    <summary>Links</summary>
-    <ul id="links"></ul>
-  </details>
-
-  <details>
-    <summary>Attachments</summary>
-    <ul id="attachments"></ul>
-  </details>
-
-  <p id="scanResult">Result will appear here.</p>
-
-  <button id="scan">Scan Email</button>
 </body>
 </html>
