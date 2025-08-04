@@ -1,62 +1,20 @@
 # Inbox Guardian
+## Overview
+Inbox Guardian is an AI-powered email threat scanner made in a small package for your browser. By installing it as an extension, you can get real-time analysis on your currently open email on popular email sites such as Gmail and Outlook. Inbox Guardian is powered by Tensorflow and runs entirely on your machine to ensure privacy. No information ever leaves your computer! Our tool will let users, from everyday browsers to tech specialists, have a second opinion on security when viewing their inbox.
 
-## Overview:
-
-**Inbox Guardian** is an AI powered email threat scanner made in a small package for your browser. By installing it as an extension, you can get real time analysis on your currently open email on popular email sites such as gmail and outlook. Inbox Guardian is powered by Tensorflow and runs entirely on your machine to ensure privacy. No information ever leaves your computer\! Our tool will let users from everyday browsers to tech specialists have a second opinion on security when viewing their inbox.
-
-### Tools Used
-
-- Programming Languages  
-  - Python  
-  - Javascript  
-  - CSS  
-- Tensorflow  
-  - [tensorflow.js](http://tensorflow.js)  
-  - TensorFlow Serving  
-- Public Datasets  
-  - https://huggingface.co/AcuteShrewdSecurity/Llama-Phishsense-1B  
-  - https://www.kaggle.com/datasets/naserabdullahalam/phishing-email-dataset  
-  - https://www.kaggle.com/datasets/ethancratchley/email-phishing-dataset/data
-
-### Design Decisions 
-
-- [x] ~~Gen AI or Machine Learning~~  
-- Machine Learning  
-- [x] What machine Learning model  
-- [x] Dataset
-- [x] Chrome Extension  
-- [ ] Firefox Compatibility
-
-### Diagrams
-
-![Inbox-Guardian-Architecture-Draft](https://github.com/user-attachments/assets/672527a1-c405-40de-83a9-75e9afd995d0)
+<img width="402" height="301" alt="Screenshot 2025-08-03 231610" src="https://github.com/user-attachments/assets/423e053c-d212-40c5-a927-e4d7c4efc524" />
 
 
-### Milestones
+## Purpose
+When designing this tool, we sought to fill a need for the everyday internet user by adding a needed layer of security to their inbox. My mom often asks me if an email she received is real or a scam, and now we have something that can help her make these decisions herself. Even in businesses, users still fall for phishing attacks that manage to bypass automated filters. They assume that since it wasn’t blocked, it must be safe. By serving as a second pair of eyes, rather than a filter that simply lets emails in or blocks them, we promote caution and awareness in the context of email security. The best part is that the whole extension can be used with the single click of a button, and on top of our straightforward and 
+simplistic GUI, you get an easy-to-digest analysis within milliseconds.
 
-#### Progress Checklist
+## Topology
+<img width="722" height="505" alt="Senior Project" src="https://github.com/user-attachments/assets/c5dacfe5-dd7d-415c-afab-de83d38b5a96" />
 
-- [x] ~~Repo Created~~  
-- [x] ~~Extension Framework~~  
-- [x] DOM Scraping Functional  
-- [x] Model Trained  
-- [x] Model implementation
 
-#### Required Deliverable
+## Installation
+Clone the repository to the desired location. In Google Chrome, select "manage extensions" and then enable developer mode. Finally, load the unpacked extension by selecting the foleder containing the extension files. 
 
-- [x] Unpacked Extension Functional
-
-#### Extended Milestones
-
-- [ ] Improve model accuracy
-- [ ] More informative UI  
-- [ ] Text evaluation summary  
-- [ ] Functional on different mail sites  
-- [ ] Published on Chrome & Firefox Store
-
-### Concerns
-
-- Ensure Model is same format as what is readable for extension  
-- Ensure Dataset is recent  
-- Classification model might not lead to score  
-- Run only on local machine for privacy
+## Usage
+Simply open the extension popup and click the scan button when an email is open in Gmail. Click the dropdown menues to see the attatched links and images.
